@@ -7,7 +7,14 @@ package com.lydia.dao;
 
 import com.lydia.entity.Course;
 import com.lydia.utility.DaoService;
+import com.lydia.utility.HibernateUtil;
+import java.util.ArrayList;
 import java.util.List;
+import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.criterion.Restrictions;
 
 /**
  *
@@ -17,27 +24,72 @@ public class CourseDaoImpl implements DaoService<Course> {
 
     @Override
     public int save(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.save(t);
+            transaction.commit();
+            result = 1;
+        } catch (HibernateException e) {
+            transaction.rollback();
+        }
+        session.close();
+        return result;
     }
 
     @Override
     public int delete(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.delete(t);
+            transaction.commit();
+            result = 1;
+        } catch (HibernateException e) {
+            transaction.rollback();
+        }
+        session.close();
+        return result;
     }
 
     @Override
     public int update(Course t) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Transaction transaction = session.beginTransaction();
+        try {
+            session.update(t);
+            transaction.commit();
+            result = 1;
+        } catch (HibernateException e) {
+            transaction.rollback();
+        }
+        session.close();
+        return result;
     }
 
     @Override
     public List<Course> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        List<Course> courses = new ArrayList<>();
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Course.class);
+        courses.addAll(criteria.list());
+        session.close();
+        return courses;
     }
 
     @Override
     public Course find(Object object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        Criteria criteria = session.createCriteria(Course.class)
+                .add(Restrictions.eq("name", object.toString()))
+                .setMaxResults(1);
+        if (criteria.list().isEmpty()) {
+            return null;
+        }
+        return (Course) criteria.list().get(0);
     }
 
 }
