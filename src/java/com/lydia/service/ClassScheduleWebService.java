@@ -13,8 +13,8 @@ import javax.jws.WebService;
  *
  * @author USER
  */
-@WebService(serviceName = "MyWebService")
-public class MyWebService {
+@WebService(serviceName = "ClassSchedule")
+public class ClassScheduleWebService {
 
     /**
      * This is a sample web service operation

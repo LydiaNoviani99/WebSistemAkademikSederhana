@@ -1,8 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
   <services>
-    <service name="MyWebService">
-      <implementation-class>com.lydia.service.MyWebService</implementation-class>
+    <service name="AcademicYearWebService">
+      <implementation-class>com.lydia.service.AcademicYearWebService</implementation-class>
+    </service>
+    <service name="DepartmentWebService">
+      <implementation-class>com.lydia.service.DepartmentWebService</implementation-class>
+    </service>
+    <service name="ClassScheduleIdWebService">
+      <implementation-class>com.lydia.service.ClassScheduleIdWebService</implementation-class>
+    </service>
+    <service name="ClassScheduleWebService">
+      <implementation-class>com.lydia.service.ClassScheduleWebService</implementation-class>
+    </service>
+    <service name="CourseWebService">
+      <implementation-class>com.lydia.service.CourseWebService</implementation-class>
+    </service>
+    <service name="FacultyWebService">
+      <implementation-class>com.lydia.service.FacultyWebService</implementation-class>
+    </service>
+    <service name="LecturerWebService">
+      <implementation-class>com.lydia.service.LecturerWebService</implementation-class>
+    </service>
+    <service name="RoleWebService">
+      <implementation-class>com.lydia.service.RoleWebService</implementation-class>
+    </service>
+    <service name="RoomWebService">
+      <implementation-class>com.lydia.service.RoomWebService</implementation-class>
+    </service>
+    <service name="SemesterWebService">
+      <implementation-class>com.lydia.service.SemesterWebService</implementation-class>
+    </service>
+    <service name="StudentWebService">
+      <implementation-class>com.lydia.service.StudentWebService</implementation-class>
     </service>
   </services>
   <clients/>
