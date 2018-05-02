@@ -81,15 +81,14 @@ public class SemesterDaoImpl implements DaoService<Semester> {
     }
 
     @Override
-    public Semester find(Object object) {
+    public List<Semester> find(Object object) {
+        List<Semester> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Semester.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Semester) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Semester.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

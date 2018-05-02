@@ -81,15 +81,14 @@ public class CourseDaoImpl implements DaoService<Course> {
     }
 
     @Override
-    public Course find(Object object) {
+    public List<Course> find(Object object) {
+        List<Course> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Course.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Course) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Course.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

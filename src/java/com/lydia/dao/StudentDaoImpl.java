@@ -81,15 +81,14 @@ public class StudentDaoImpl implements DaoService<Student> {
     }
 
     @Override
-    public Student find(Object object) {
+    public List<Student> find(Object object) {
+        List<Student> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Student.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Student) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Student.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

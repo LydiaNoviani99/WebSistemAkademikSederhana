@@ -81,15 +81,14 @@ public class RoleDaoImpl implements DaoService<Role> {
     }
 
     @Override
-    public Role find(Object object) {
+    public List<Role> find(Object object) {
+        List<Role> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Role.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Role) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Role.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

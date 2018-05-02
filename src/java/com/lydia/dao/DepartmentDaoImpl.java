@@ -81,15 +81,14 @@ public class DepartmentDaoImpl implements DaoService<Department> {
     }
 
     @Override
-    public Department find(Object object) {
+    public List<Department> find(Object object) {
+        List<Department> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Department.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Department) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Department.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

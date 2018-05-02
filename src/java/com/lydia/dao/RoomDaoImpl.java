@@ -81,15 +81,14 @@ public class RoomDaoImpl implements DaoService<Room> {
     }
 
     @Override
-    public Room find(Object object) {
+    public List<Room> find(Object object) {
+        List<Room> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Room.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Room) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Room.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

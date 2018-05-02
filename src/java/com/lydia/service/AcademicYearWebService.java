@@ -25,20 +25,14 @@ public class AcademicYearWebService {
     }
 
     /**
-     * This is a sample web service operation
-     */
-    @WebMethod(operationName = "hello")
-    public String hello(@WebParam(name = "name") String txt) {
-        return "Hello " + txt + " !";
-    }
-
-    /**
      * Web service operation
      */
     @WebMethod(operationName = "addAcademicYear")
     public Integer addAcademicYear(
+            @WebParam(name = "id") int id,
             @WebParam(name = "name") String name) {
         AcademicYear academicYear = new AcademicYear();
+        academicYear.setId(id);
         academicYear.setName(name);
         return academicYearDaoImpl.save(academicYear);
     }
@@ -65,5 +59,13 @@ public class AcademicYearWebService {
         AcademicYear academicYear = new AcademicYear();
         academicYear.setId(id);
         return academicYearDaoImpl.delete(academicYear);
+    }
+
+    /**
+     * Web service operation
+     */
+    @WebMethod(operationName = "showAllAcademicYear")
+    public java.util.List<AcademicYear> showAllAcademicYears() {
+        return academicYearDaoImpl.findAll();
     }
 }

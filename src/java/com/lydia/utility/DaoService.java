@@ -22,6 +22,6 @@ public interface DaoService<T> {
 
     List<T> findAll();
 
-    T find(Object object);
+    List<T> find(Object object);
 
 }

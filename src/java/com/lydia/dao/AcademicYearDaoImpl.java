@@ -81,15 +81,14 @@ public class AcademicYearDaoImpl implements DaoService<AcademicYear> {
     }
 
     @Override
-    public AcademicYear find(Object object) {
+    public List<AcademicYear> find(Object object) {
+        List<AcademicYear> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(AcademicYear.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (AcademicYear) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(AcademicYear.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

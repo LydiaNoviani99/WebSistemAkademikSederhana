@@ -81,15 +81,14 @@ public class ClassScheduleDaoImpl implements DaoService<ClassSchedule> {
     }
 
     @Override
-    public ClassSchedule find(Object object) {
+    public List<ClassSchedule> find(Object object) {
+        List<ClassSchedule> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(ClassSchedule.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (ClassSchedule) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(ClassSchedule.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }

@@ -81,15 +81,14 @@ public class LecturerDaoImpl implements DaoService<Lecturer> {
     }
 
     @Override
-    public Lecturer find(Object object) {
+    public List<Lecturer> find(Object object) {
+        List<Lecturer> categories = new ArrayList<>();
         Session session = HibernateUtil.getSessionFactory().openSession();
-        Criteria criteria = session.createCriteria(Lecturer.class)
-                .add(Restrictions.eq("name", object.toString()))
-                .setMaxResults(1);
-        if (criteria.list().isEmpty()) {
-            return null;
-        }
-        return (Lecturer) criteria.list().get(0);
+        Criteria criteria = session.createCriteria(Lecturer.class).add(
+                Restrictions.like("name", "%" + object.toString() + "%"));
+
+        categories.addAll(criteria.list());
+        return categories;
     }
 
 }
